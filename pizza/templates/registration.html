@@ -1,0 +1,113 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/reg.css' %}">
+<Style>
+  body {
+    background-image: url("{% static '/images/loginbg.jpg' %}");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+  </Style>
+
+{% endblock style %}
+
+{% block content %}
+<div class="mask d-flex align-items-center h-500 gradient-custom-3 ">
+  <div class="container h-300 ">
+    <div class="row d-flex justify-content-center align-items-center h-100 ">
+      <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+        <div class="card main" style="border-radius: 15px;" >
+          <div class="card-body p-5 ">
+            <h2 class="text-uppercase text-center mb-5">Register</h2>
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+              {{error}}
+            </div>
+            {% endif %}
+
+            <form method="POST" class="row g-3 needs-validation" novalidate>
+              {%csrf_token%}
+              <div class="form-outline mb-4">
+                <label for="validationCustom01" class="form-label">Name</label>
+                <input type="text" class="form-control" id="validationCustom01" name="name"  pattern="[A-Za-z]{1,32}" required>
+                <div class="invalid-feedback">
+                  Provide a valid Name
+                </div>
+              </div>
+              <div class="form-outline mb-4">
+                <label for="validationCustom02" class="form-label">Email</label>
+                <input type="email" class="form-control" id="validationCustom02" name="email" required>
+                <div class="invalid-feedback">
+                  Provide a valid email
+                </div>
+              </div>
+              <div class="form-outline mb-4">
+              <label for="validationCustom03" class="form-label">Password</label>
+              <input type="password" class="form-control" id="validationCustom03" name="password"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+              <div class="invalid-feedback">
+                Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more
+                characters
+              </div>
+            </div>
+
+              <div class="form-outline mb-4">
+                <label for="validationCustom04" class="form-label">Mobile No</label>
+                <input type="tel" class="form-control" id="validationCustom04" name="ph_no" pattern="[789][0-9]{9}"
+                  required>
+                <div class="invalid-feedback">
+                  Provide a valid Number
+                </div>
+              </div>
+              <div class="form-check d-flex justify-content-center mb-5">
+                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" required />
+                <label class="form-check-label" for="form2Example3g">
+                  I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
+                </label>
+                <br>
+                <h4 style="color: red;">
+                <label>
+                  {% for msg in messages %}
+                  {{msg}}
+                  {% endfor %}
+                </label>
+              </h4>
+              </div>
+              <div class="d-flex justify-content-center">
+                <input type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
+                  value="Submit">
+              </div>
+              <label class="text-center text-muted mt-5 mb-0">
+                <p>Have already an account? </p><a href="{% url 'login' %}" class="fw-bold text-body"><u>Login here</u></a>
+              </label>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  (() => {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+{% endblock content %}

@@ -1,0 +1,217 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/checkout.css' %}">
+<style>
+    body {
+    background-image: url("{% static '/images/checkoutbg.png' %}");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+</style>
+{% endblock style %}
+{% block content %}
+{% include "nav.html" %}
+<div class="container col-lg-12"  style="height: 50px; font-family: Lucida Handwriting; font-size: 20px;height: 300px;color: aliceblue; ">
+    <br><br><br>
+    Thank you for choosing PizzaExpress for your pizza cravings! 🍕 Your order is almost ready to be served piping hot. 
+    Please review your order details below and complete the payment to finalize your delicious pizza experience: <br>
+    Once your payment is confirmed, our talented pizza chefs will start crafting your masterpiece. You can expect your order to arrive at your doorstep within the estimated delivery time.<br>
+    Enjoy your pizza adventure with us 🍕👨‍🍳👩‍🍳
+</div>
+<hr>
+<div class="row" style="color: aliceblue; font-size: 25px;" >
+    
+    <div class="col-lg-6">
+        <div class="box-element" id="form-wrapper">
+            
+            <form id="form">
+                <div id="user-info">
+                    <div class="form-field">
+                        <input required class="form-control" type="text" name="name" placeholder="Name..">
+                    </div>
+                    <div class="form-field">
+                        <input required class="form-control" type="email" name="email" placeholder="Email..">
+                    </div>
+                </div>
+
+                <div id="shipping-info">
+                    <hr>
+                    <p>Shipping Information:</p>
+                    <hr>
+                    <div class="form-field">
+                        <input class="form-control" type="text" name="address" placeholder="Address..">
+                    </div>
+                    <div class="form-field">
+                        <input class="form-control" type="text" name="city" placeholder="City..">
+                    </div>
+                    <div class="form-field">
+                        <input class="form-control" type="text" name="state" placeholder="State..">
+                    </div>
+                    <div class="form-field">
+                        <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
+                    </div>
+                    
+                </div>
+
+                <hr>
+                <input id="form-button" class="btn btn-success btn-block" type="submit" value="Payment" id="make-payment">
+            </form>
+        </div>
+        
+
+        <br>
+        
+
+    </div>
+
+    <div class="col-lg-6">
+        <div class=" text-center">
+            <a class="btn btn-outline-light" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+            <hr>
+            <h3>Order Summary</h3>
+            <hr>
+            <div style="margin-right: 80px;">
+            <div class=" text-center">
+                <div class="row">
+                    <div class="col-6">
+                        <strong>Name</strong>
+                    </div>
+                    <div class="col">
+                        <strong>Price</strong>
+                    </div>
+                    <div class="col">
+                        <strong>Quantity</strong>
+                    </div>
+                    <div class="col">
+                        <strong>Total</strong>
+                    </div>
+                </div>
+            </div>
+            {% for item in items %}
+            <div class=" text-center">
+                <div class="row">
+                    <div class="col-6">
+                        <strong>{{item.product.name}}</strong>
+                    </div>
+                    <div class="col">
+                        <strong>{{item.product.price|floatformat:2}}</strong>
+                    </div>
+                    <div class="col">
+                        <strong>{{item.quntity}}</strong>
+                    </div>
+                    <div class="col">
+                        <strong>{{item.get_total}}</strong>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <h5>Items : {{order.get_cart_items}}</h5>
+            <h5>Grand Total : {{order.get_cart_total}}</h5>
+        </div>
+    </div>
+    </div>
+</div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var Shipping = '{{order.shipping}}'
+    var total = '{{order.get_cart_total}}'
+    console.log("total")
+    console.log(total)
+var options = {
+    
+    "key": "rzp_test_OLtkEv9d4tEzRr", // Enter the Key ID generated from the Dashboard
+    
+    "amount": 10000, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "PizzaExpress",
+    "description": "Pay for Order",
+    "image": "",
+    "order_id": "{{payment.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+    submitFormData()
+    },
+    
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+});
+var form = document.getElementById('form')   
+    form.addEventListener('submit',function(e){      
+    rzp1.open();
+    e.preventDefault();
+});
+
+    
+    /*var form = document.getElementById('form')
+    
+    form.addEventListener('submit',function(e){
+        e.preventDefault()
+        submitFormData()
+    })*/
+    
+    function submitFormData(){
+        
+        console.log("Payment")
+        var userFormData = {
+            'name':null,
+            'email':null,
+            'total':total
+        }
+        var shippingInfo = {
+            'address':null,
+            'city':null,
+            'state':null,
+            'zipcode':null,
+            
+        }
+        shippingInfo.address = form.address.value
+		shippingInfo.city = form.city.value
+		shippingInfo.state = form.state.value
+		shippingInfo.zipcode = form.zipcode.value
+
+        
+	    userFormData.name = form.name.value
+	    userFormData.email = form.email.value
+	    	
+
+	    console.log('Shipping Info:', shippingInfo)
+	    console.log('User Info:', userFormData)
+
+        var url = '/process_order/'
+     console.log(url)
+    
+     fetch(url , {
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json',
+            'X-CSRFToken' : csrftoken
+        },
+         body:JSON.stringify({
+            'form' : userFormData , 'shipping' : shippingInfo,
+         })
+     })
+
+	.then((response) =>{
+		return response.json()
+	})
+	.then((data) =>{
+		console.log('success:', data)
+        alert('Transaction completed')
+        window.location.href = "{% url 'home' %}"
+})
+
+    }
+</script>
+{% endblock content %}

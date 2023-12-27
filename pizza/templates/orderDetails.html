@@ -1,0 +1,69 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block style %}
+
+<Style>
+.bg1{
+    background-color: aquamarine;
+}
+.bg2{
+    background-color:darkgrey;
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 500;
+}
+</Style>
+{% endblock style %}
+{% block content %}
+{% include "nav.html" %}
+<h3>Ordered Items : </h3>
+
+<div
+class="bg1 d-md-flex d-none justify-content-md-between justify-content-sm-center align-content-center border-bottom border-2 my-2  text-dark p-3 rounded-3">
+<div class="col-2 text-sm-center text-md-start align-self-center">
+    <h1 class="h5 fw-bold">Pizza Name</h1>
+</div>
+<div class="col-2 align-self-center">
+    <h1 class="h5 fw-bold">Price</h1>
+</div>
+<div class="col-3 align-self-center">
+    <h1 class="h5 fw-bold">Quantity</h1>
+</div>
+<div class="col-2 align-self-center">
+    <h1 class="h5 fw-bold">Total</h1>
+</div>
+
+</div>
+{% for order in ordered %}
+<div class="bg2">
+<p>Order ID : {{order.order.Order_id}}  &nbsp; &nbsp; &nbsp;    Date : {{order.order.date_orderd}}  &nbsp; &nbsp; &nbsp;Order Total {{order.order.get_cart_total}}</p>
+</div>
+{% for item in order.items %}
+<div
+class="d-md-flex d-sm-block justify-content-md-between justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3">
+<div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
+    <h1 class="h6">{{item.product.name}}</h1>
+</div>
+<div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
+    <h1 class="h6">{{item.product.price}}</h1>
+</div>
+
+<div class="col-md-3 text-sm-center text-md-start align-self-center my-2">
+    <h1 class="h6">{{item.quntity}}</h1>
+</div>
+<div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
+    <h1 class="h6"> {{item.get_total}}</h1>
+</div>
+
+
+
+</div>
+{% endfor %}
+{% endfor %}
+
+    <blockquote class="blockquote text-center">
+        <p class="mb-0">** That's it! **</p>
+        <footer class="blockquote-footer"> You've scrolled to the end of the List!</footer>
+    </blockquote>
+{% endblock content %}

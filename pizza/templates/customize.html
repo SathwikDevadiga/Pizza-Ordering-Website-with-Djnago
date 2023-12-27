@@ -1,0 +1,415 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block style %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+  #main {
+    padding-left: 100px;
+    width: 1800px;
+    height: 500px;
+    display: flex;
+  }
+
+  .leftblock {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+
+  ul {
+    display: flex;
+  }
+
+  ul {
+    -ms-flex: 1;
+    /* IE 10 */
+    flex: 1;
+  }
+
+  #main div {
+    -ms-flex: 1;
+    /* IE 10 */
+    flex: 1;
+  }
+
+  #carousel-item {
+    height: 30%;
+  }
+
+
+  ul {
+    list-style-type: none;
+  }
+
+  li {
+    display: inline-block;
+    padding-left: 30px;
+  }
+
+  input[type="checkbox"][id^="ck"] {
+    display: none;
+  }
+
+  label {
+    border: 1px solid #fff;
+    padding: 10px;
+    display: block;
+    position: relative;
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  label:before {
+    background-color: white;
+    color: white;
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    border: 1px solid grey;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 28px;
+    transition-duration: 0.4s;
+    transform: scale(0);
+  }
+
+  label img {
+
+    transition-duration: 0.2s;
+    transform-origin: 50% 50%;
+  }
+
+  :checked+label {
+    border-color: #ddd;
+  }
+
+  :checked+label:before {
+    content: "✓";
+    background-color: grey;
+    transform: scale(1);
+  }
+
+  :checked+label img {
+    transform: scale(0.9);
+    /* box-shadow: 0 0 5px #333; */
+    z-index: -1;
+  }
+
+  .carousel-inner {
+    padding-left: 100px;
+  }
+
+  .l1 {
+    position: absolute;
+    width: 70%;
+    height: 80%;
+    display: block;
+    margin-top: 40px;
+    margin-left: 80px;
+    margin-right: auto;
+  }
+
+  .l2,
+  .l3 {
+    position: absolute;
+    width: 68%;
+    height: 80%;
+    display: block;
+    margin-top: 45px;
+    margin-left: 98px;
+    margin-right: auto;
+  }
+
+  .toggle-image , .toggle-image2 , .toggle-image3 ,.toggle-image4 {
+    display: flex
+  }
+  body {
+  background-image: url("{% static '/images/custbg.png' %}");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+ul{
+  background-color: rgba(22, 22, 22, 0.411); 
+  
+}
+th, td {
+  padding: 10px;
+  font-size: 25px; 
+}
+
+
+</style>
+{% endblock style %}
+{% block content %}
+{% include "nav.html" %}
+
+
+
+
+
+<div class="" id="main">
+  <div class="leftblock" >
+
+    <img src="{% static 'images/base1.png' %}" id="image1" class="toggleable-image l1" style="display: none;">
+    <img src="{% static 'images/base2.png' %}" id="image2" class="toggleable-image l1" style="display: none;">
+    <img src="{% static 'images/base3.png' %}" id="image3" class="toggleable-image l1" style="display: none;">
+
+    <img src="{% static 'images/Sauce1.png' %}" id="image4" class="toggleable-image2 l2" style="display: none;">
+    <img src="{% static 'images/Sauce2.png' %}" id="image5" class="toggleable-image2 l2" style="display: none;">
+    <img src="{% static 'images/Sauce3.png' %}" id="image6" class="toggleable-image2 l2" style="display: none;">
+
+    <img src="{% static 'images/ing1.png' %}" id="image7" class="toggleable-image3 l3" style="display: none;">
+    <img src="{% static 'images/ing2.png' %}" id="image8" class="toggleable-image3 l3" style="display: none;">
+    <img src="{% static 'images/ing3.png' %}" id="image9" class="toggleable-image3 l3" style="display: none;">
+    <img src="{% static 'images/ing4.png' %}" id="image10" class="toggleable-image3 l3" style="display: none;">
+
+    <img src="{% static 'images/cheese1.png' %}" id="image11" class="toggleable-image4 l3" style="display: none;">
+    <img src="{% static 'images/cheese2.png' %}" id="image12" class="toggleable-image4 l3" style="display: none;">
+    <img src="{% static 'images/cheese3.png' %}" id="image13" class="toggleable-image4 l3" style="display: none;">
+
+
+
+  </div>
+  <div >
+    Ingreditants
+    <div>
+      <table style="color: #ddd; width:100%">
+        <tr>
+          <th></th>
+        </tr>
+        <tr>
+        <th >Pizza Base</th>
+        <td class="toggleable-image" id="txtimage1" style="display: none; ">whole wheat</td>
+        <td class="toggleable-image" id="txtimage2" style="display: none; ">Flour</td>
+        <td class="toggleable-image" id="txtimage3" style="display: none;">Cheese Brust</td>
+        </tr>
+
+        <tr>
+          <th >Sauce</th>
+          <td class="toggleable-image2" id="txtimage4" style="display: none;">Marinara</td>
+          <td class="toggleable-image2" id="txtimage5" style="display: none;">BBQ </td>
+          <td class="toggleable-image2" id="txtimage6" style="display: none;">Spicy Red</td>
+          </tr>
+
+          <tr>
+            <th >Toping</th>
+            <td class="toggleable-image3" id="txtimage7" style="display: none;"> olive</td>
+            <td class="toggleable-image3" id="txtimage8" style="display: none;">mushroom </td>
+            <td class="toggleable-image3" id="txtimage9" style="display: none;">green pepper</td>
+            <td class="toggleable-image3" id="txtimage10" style="display: none;">bacon</td>
+            </tr>
+
+            <tr>
+              <th >Cheese</th>
+              <td class="toggleable-image4" id="txtimage11" style="display: none; ">Mozzarella</td>
+              <td class="toggleable-image4" id="txtimage12" style="display: none;">Cheddar </td>
+              <td class="toggleable-image4" id="txtimage13" style="display: none;">Cottage</td>
+            </tr>
+        
+      </table>
+      <div id="txtTotal" style="font-size: 20px; color: #ddd;"></div>
+    </div>
+    <button onclick="Total()" >Buy</button>
+  </div>
+
+</div>
+
+<div class="container-xxl" style="color: #ddd;" >
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+        aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+        aria-label="Slide 4"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <ul> 
+          <li> <input type="radio" name="base" id="ck1" class="toggle-image input" data-target="image1" value="70,WholeWheat" checked><label for="ck1"><img
+                src="{% static 'images/base1.png' %}"><br><bold>Whole wheat Rs.70</bold></li></label>
+          <li> <input type="radio" id="ck2" name="base" class="toggle-image input" data-target="image2" value="50,Flour"><label for="ck2"><img
+                src="{% static 'images/base2.png' %}"><br>Flour Rs.50</li></label>
+          <li> <input type="radio" id="ck3" name="base" class="toggle-image input" data-target="image3" value="90,CheeseBurst"><label for="ck3"><img
+                src="{% static 'images/base3.png' %}"><br>Cheese Burst Rs.90</li></label>
+        </ul>
+      </div>
+      <div class="carousel-item">
+        <ul>
+          <li> <input type="radio" name="Sauce" id="ck4" class="toggle-image2 input" data-target="image4" value="30,Marinara"><label
+              for="ck4"><img src="{% static 'images/Sauce1.png' %}"><br>Marinara Rs.30</li></label>
+          <li> <input type="radio" id="ck5" name="Sauce" class="toggle-image2 input" data-target="image5" value="25,BBQ"><label
+              for="ck5"><img src="{% static 'images/Sauce2.png' %}"><br>BBQ Rs.25</li></label>
+          <li> <input type="radio" id="ck6" name="Sauce" class="toggle-image2 input" data-target="image6" value="20,SpicyRed"><label
+              for="ck6"><img src="{% static 'images/Sauce3.png' %}"><br>Spicy Red Rs.20</li></label>
+        </ul>
+
+
+      </div>
+      <div class="carousel-item">
+        <li> <input type="checkbox" name="Sauce" id="ck7" class="toggle-image3 input" data-target="image7" value="50,olive"><label
+            for="ck7"><img src="{% static 'images/ing1.png' %}"><br>olive Rs.50</li></label>
+        <li> <input type="checkbox" id="ck8" name="Sauce" class="toggle-image3 input" data-target="image8" value="40,mushroom"><label
+            for="ck8"><img src="{% static 'images/ing2.png' %}"><br>mushroom Rs.40</li></li></label>
+        <li> <input type="checkbox" id="ck9" name="Sauce" class="toggle-image3 input" data-target="image9" value="35,greenPepper"><label
+            for="ck9"><img src="{% static 'images/ing3.png' %}"><br>greenPepper Rs.35</li></li></label>
+        <li> <input type="checkbox" id="ck10" name="Sauce" class="toggle-image3 input" data-target="image10" value="60,bacon"><label
+            for="ck10"><img src="{% static 'images/ing4.png' %}"><br>bacon Rs.60</li></li></label>
+      </div>
+      <div class="carousel-item">
+        <li> <input type="radio" name="Sauce" id="ck11" class="toggle-image4 input" data-target="image11" value="70,Mozzarella"><label
+            for="ck11"><img src="{% static 'images/cheese1.png' %}"><br>Mozzarella Rs.70</li></label>
+        <li> <input type="radio" id="ck12" name="Sauce" class="toggle-image4 input" data-target="image12" value="50,Cheddar"><label
+            for="ck12"><img src="{% static 'images/cheese2.png' %}"><br>Cheddar Rs.50</li></label>
+        <li> <input type="radio" id="ck13" name="Sauce" class="toggle-image4 input" data-target="image13" value="60,Cottage"><label
+            for="ck13"><img src="{% static 'images/cheese3.png' %}"><br>Cottage Rs.60</li></label>
+        
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+<script>
+  $(document).ready(function () {
+    // Attach a change event handler to all checkboxes with class "toggle-image"
+    $(".toggle-image").on("change", function () {
+      var target = $(this).data("target"); // Get the target image ID
+      console.log(target)
+      var $image = $("#" + target); // Select the target image
+
+      var txt = ("txt" + target);
+
+      var x = document.getElementById(txt);
+      x.style.display = "none";
+
+      $(".toggleable-image").not($image).hide();
+      if ($(this).is(":checked")) {
+        $image.show();
+        x.style.display = "block";
+        // Show the target image
+      } else {
+
+      }
+    });
+
+    $(".toggle-image2").on("change", function () {
+      var target = $(this).data("target"); // Get the target image ID
+      console.log(target)
+      var $image = $("#" + target); // Select the target image
+
+      var txt = ("txt" + target);
+
+      var x = document.getElementById(txt);
+      x.style.display = "none";
+
+      $(".toggleable-image2").not($image).hide();
+      if ($(this).is(":checked")) {
+        $image.show();
+        x.style.display = "block";
+        // Show the target image
+      } else {
+
+      }
+    });
+
+    $(".toggle-image4").on("change", function () {
+      var target = $(this).data("target"); // Get the target image ID
+      console.log(target)
+      var $image = $("#" + target); // Select the target image
+
+      var txt = ("txt" + target);
+
+      var x = document.getElementById(txt);
+      x.style.display = "none";
+
+      $(".toggleable-image4").not($image).hide();
+      if ($(this).is(":checked")) {
+        $image.show();
+        x.style.display = "block";
+        // Show the target image
+      } else {
+
+      }
+    });
+
+
+    $(document).ready(function () {
+      // Attach a change event handler to all checkboxes with class "toggle-image"
+      $(".toggle-image3").on("change", function () {
+        var target = $(this).data("target"); // Get the target image ID
+        var $image = $("#" + target); // Select the target image
+        var txt = ("txt" + target);
+        var x = document.getElementById(txt);
+
+        if ($(this).is(":checked")) {
+          $image.show(); // Show the target image
+          x.style.display = "block";
+        } else {
+          $image.hide(); // Hide the target image
+          x.style.display = "none";
+        }
+      });
+    });
+  });
+
+  var total;
+  var items;
+  $(".input").on("change", function (){
+const inputs = document.querySelectorAll('.input');
+// Create an empty array to store the values of selected inputs
+const selectedValues = [];
+let values;
+var x = document.getElementById('txtTotal');
+total = 0 ;
+// Loop through the inputs and check if they are checked
+inputs.forEach(input => {
+  if (input.checked) {
+    values = input.value.split(',');
+    total = parseInt(values[0]) + total ;
+    items =  values[1];
+    selectedValues.push(input.value);
+    x.innerHTML = "Total " +  total;
+    
+
+    
+  }
+});
+  });
+
+  function Total(){
+    var url = '/custOrder/'
+    var price = total
+    var i = items
+    console.log(price)
+    var redirectUrl = '/custOrder/?total=' + total +'&items='+ i;
+    window.location.href = redirectUrl;
+       
+  }
+
+// Now, selectedValues array contains the values of selected radio buttons and checkboxes
+
+</script>
+{% endblock content %}

@@ -1,0 +1,43 @@
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}">
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" >PizzaExpress</a>
+      
+      
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}" style="color: aliceblue
+            ;">Home</a>
+             <a class="nav-link active" aria-current="page" href="{% url 'customize' %}" style="color: aliceblue
+             ;">Customize</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'orderDetails' %}" style="color: aliceblue
+              ;">Orders</a>
+          
+            <a class="nav-link" href="{% url 'contact' %}" style="color: aliceblue
+            ;">Contact Us</a>
+            {% if request.user.is_authenticated %}
+            <h5 class="mr-sm-3"><strong><a href="{% url 'user_logout' %}" style="color: white">Logout</a></strong></h5>
+           
+           <h5><strong style="color: white">Welcome {{request.user.username}}</strong></h5>
+          
+          {% else %}
+          <div class="form-inline my-2 my-lg-0">
+            
+            <a class="btn btn-warning"  href="{% url 'login' %}">Login</a>
+            
+              <a class="btn btn-warning" a href="{% url 'registration' %}">Sign in</a>
+            </div>
+          {% endif %}
+          
+          
+          <div class="form-inline my-2 my-lg-0">
+            <a href="{% url 'cart' %}" style="margin-right: 20px;">
+              <img  id="cart-icon" src="{% static 'images/cart.png' %}"> 
+            </a>
+            <p id="cart-total" style="color: aliceblue;position: absolute;margin-left: 30px;margin-bottom: 50px;">{{order.get_cart_items}}</p>
+
+          </div>
+          
+      </div>
+    </div>
+  </nav>

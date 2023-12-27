@@ -1,0 +1,97 @@
+
+
+{% extends 'main.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+<style>
+  .col{
+    display: flex;
+  align-items: center;
+  }
+  body {
+  background-image: url("{% static '/images/checkoutbg.png' %}");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+</style>
+{% endblock style %}
+{% block content %}
+{% include "nav.html" %}
+<br>
+<div class="row" style="color: aliceblue;">
+    <div class="col-lg-12">
+        <div >
+
+            <a  class="btn btn-outline-light" href="{% url 'home' %}">&#x2190; Continue Shopping</a>
+
+            <br>
+            <br>
+            <table  >
+                <tr>
+                    <th class="col-6" style="color: aliceblue;" ><h5>Items: <strong>{{order.get_cart_items}}</strong></h5></th>
+                    <th class="col-6" style="color: aliceblue;"><h5>Total:<strong>{{order.get_cart_total}}</strong></h5></th>
+                    <th>
+                        <a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+                    </th>
+                </tr>
+            </table>
+
+        </div>
+
+        <br>
+            <div class=" text-center" style=" font-size: 30px;" >
+                <div class="row">
+                  <div class="col-3">
+                    
+                  </div>
+                  <div class="col">
+                    <strong>Item</strong>
+                  </div>
+                  <div class="col">
+                    <strong>Price</strong>
+                  </div>
+                  <div class="col">
+                    <strong>Quantity</strong>
+                  </div>
+                  <div class="col">
+                    <strong>Total</strong>
+                  </div>
+                </div>
+              </div>
+
+              {% for item in items %}
+              <div class=" text-center" style="font-size: 25px;">
+                <div class="row">
+                  <div class="col-3">
+                    <img src="{{item.product.imageURL}}" class="img-fluid rounded-3"
+                      style="width: 320px;height: 200px;" alt="Book">
+                    
+                  </div>
+                  <div class=" col col-2.5">
+                    <strong>{{item.product.name}}</strong>
+                  </div>
+                  <div class="col col-2">
+                    <strong>{{item.product.price|floatformat:2}}</strong>
+                  </div>
+                  <div class="col">
+                    
+                    <div class="def-number-input number-input safari_only">
+                      <button data-product={{item.product.id}} data-action="add" class="bi bi-plus-circle update-cart" ></button>
+                        <strong>{{item.quntity}}</strong>
+                      <button data-product={{item.product.id}} data-action="remove" class="bi bi-minus-circle update-cart" ></button>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <strong>{{item.get_total}}</strong>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
